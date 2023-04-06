@@ -58,17 +58,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         criarBancoDados();
-        // inserirDadosTemp();
+        //inserirDadosTemp();
         listarDados();
+
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         listarDados();
+        criarTabela();
+        //inserirDadosUser();
     }
 
-    public void criarBancoDados(){
+    public void criarBancoDados() {
         try {
             bancoDados = openOrCreateDatabase("mygames", MODE_PRIVATE, null);
             bancoDados.execSQL("CREATE TABLE IF NOT EXISTS game(" +
@@ -81,6 +84,20 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void criarTabela() {
+        try {
+            bancoDados = openOrCreateDatabase("mygames", MODE_PRIVATE, null);
+            bancoDados.execSQL("CREATE TABLE IF NOT EXISTS user(" +
+                    "   username PRIMARY KEY" +
+                    " , password VARCHAR)");
+            //bancoDados.execSQL("DELETE FROM animal");
+            bancoDados.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void inserirDadosTemp(){
         try{
@@ -101,6 +118,24 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
+    public void inserirDadosUser(){
+        try{
+            bancoDados = openOrCreateDatabase("mygames", MODE_PRIVATE, null);
+            String sql = "INSERT INTO user (username,password) VALUES (?,?)";
+            SQLiteStatement stmt = bancoDados.compileStatement(sql);
+
+            stmt.bindString(1,"user");
+            stmt.bindString(2,"1423");
+            stmt.executeInsert();
+
+            bancoDados.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     public void listarDados(){
         try {

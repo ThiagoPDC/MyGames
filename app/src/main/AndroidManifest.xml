@@ -10,13 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyGames">
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditeActivity"
             android:exported="false" />
         <activity
             android:name=".CadastroActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
