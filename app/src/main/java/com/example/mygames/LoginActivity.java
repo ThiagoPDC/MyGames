@@ -3,6 +3,7 @@ package com.example.mygames;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -17,12 +18,18 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogar;
     SQLiteDatabase bancoDados;
 
+    SharedPreferences sPreferences = null;
+
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        sPreferences = getSharedPreferences("firstRun", MODE_PRIVATE);
 
         txtUsername = (EditText) findViewById(R.id.txtUsername);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
@@ -40,10 +47,22 @@ public class LoginActivity extends AppCompatActivity {
         //inserirDadosTemp();
         //inserirDadosUser();
         criarTabela();
-
-
-
     }
+
+
+        @Override
+        public void onResume () {
+            super.onResume();
+
+            if (sPreferences.getBoolean("firstRun", true)) {
+                sPreferences.edit().putBoolean("firstRun", false).apply();
+                inserirDadosUser();
+            }
+        }
+
+
+
+
     public void inserirDadosTemp(){
         try{
             bancoDados = openOrCreateDatabase("mygames", MODE_PRIVATE, null);
@@ -98,7 +117,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
     public void logar() {
         try {
 
@@ -131,7 +149,6 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
 
 

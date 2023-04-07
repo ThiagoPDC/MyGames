@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     public SQLiteDatabase bancoDados;
     ListView listView;
-    FloatingActionButton btnCadastro;
+    FloatingActionButton btnCadastro, btnUserScreen;
     public ArrayList<Integer> arrayIds;
     Integer idSelecionado;
 
@@ -38,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 abrirTelaCadastro();
+            }
+        });
+
+        btnUserScreen = (FloatingActionButton) findViewById(R.id.btnUserScreen);
+
+        btnUserScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openUserScreen();
+
             }
         });
 
@@ -68,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         listarDados();
         criarTabela();
-        //inserirDadosUser();
+
     }
 
     public void criarBancoDados() {
@@ -78,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
                     "   id INTEGER PRIMARY KEY AUTOINCREMENT" +
                     " , title VARCHAR" +
                     " , studio VARCHAR)");
-            //bancoDados.execSQL("DELETE FROM animal");
             bancoDados.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
             bancoDados.execSQL("CREATE TABLE IF NOT EXISTS user(" +
                     "   username PRIMARY KEY" +
                     " , password VARCHAR)");
-            //bancoDados.execSQL("DELETE FROM animal");
             bancoDados.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -173,6 +181,11 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("id",id);
         startActivity(intent);
     }
+    public void openUserScreen(){
+        Intent intent  = new Intent(this,UserScreenActivity.class);
+        startActivity(intent);
+
+    };
 
 
     public void confirmaExcluir() {
