@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyGames">
         <activity
+            android:name=".CadastroUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserScreenActivity"
             android:exported="false" />
         <activity
